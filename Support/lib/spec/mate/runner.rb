@@ -36,6 +36,10 @@ module Spec
         Dir.chdir(project_directory) do
           ::Spec::Runner::CommandLine.run(::Spec::Runner::OptionParser.parse(argv, STDERR, stdout))
         end
+      rescue Exception => e
+        puts "<pre>", "#{e.class} occured : #{e.message}"
+        e.backtrace.each{|bt| puts "  from #{bt.to_s}"}
+        puts "</pre>"
       end
       
       def save_as_last_remembered_file(file)
