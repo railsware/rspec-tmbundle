@@ -13,7 +13,18 @@ elsif ENV['TM_RSPEC_HOME']
   end
   $LOAD_PATH.unshift(rspec_lib)
 end
-require 'spec/autorun'
+
+begin
+  require 'spec/autorun'
+rescue LoadError => e
+  puts "<pre>"
+  puts "Cannot load spec/autorun gem. Please make sure you have rspec gem installed."
+  puts "  Ruby version : #{VERSION}."
+  puts "  Load Path:"
+  $LOAD_PATH.each{|lp| puts "     #{lp}"}
+  puts "</pre>"
+  exit
+end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/..')
 require 'spec/mate/runner'
